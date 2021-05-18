@@ -16,14 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecipeController extends AbstractController
 {
 
-     /**
-     * @Route("/", name="home")
-     */
-    public function home()
-    {
-        return $this->render('home.html.twig');
-    }
-
     /**
      * @Route("/recettes/{slug}", name="recipepage")
      */
