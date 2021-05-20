@@ -20,7 +20,9 @@
         <v-list-item-group v-model="group">
           <v-list-item v-if="roleUser === 'ROLE_ADMIN'">
             <v-list-item-icon><v-icon>mdi-shield-account</v-icon></v-list-item-icon>
-            <v-list-item-title>Administration</v-list-item-title>
+            <v-list-item-title>
+              <a href="/admin">Administration</a>
+            </v-list-item-title>
           </v-list-item>
           <v-banner single-line v-if="roleUser === 'ROLE_ADMIN'"></v-banner>
           <router-link to="/commandes">

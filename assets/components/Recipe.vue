@@ -56,7 +56,6 @@
 import Axios from '../api/axios'
 Axios()
 
-
 export default {
   name: 'Recipe',
   props: {
