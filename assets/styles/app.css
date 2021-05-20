@@ -21,6 +21,9 @@ main {
 .container {
     max-width: 1140px !important;
 }
+.container-login {
+    max-width: 570px !important;
+}
 
 a {
     background-color: transparent;

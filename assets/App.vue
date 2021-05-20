@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- Header app -->
-    <v-app-bar fixed elevate-on-scroll color="#ffffff">
+    <v-app-bar fixed elevate-on-scroll color="#ffffff" v-if="login">
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon> <!-- icon for responsive menu -->
       <v-toolbar-title>
         <router-link to="/">
@@ -9,24 +9,28 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-if="panierAccess" color="primary" elevation="2" large outlined class="btn-panier"><v-icon>mdi-cart</v-icon>Panier</v-btn>
-      <v-btn v-if="!auth" color="#28a745" elevation="2" large outlined><v-icon>mdi-login</v-icon>Connexion</v-btn>
-      <v-btn v-if="auth" color="#dc3545" elevation="2" large outlined><v-icon>mdi-logout</v-icon>Deconnexion</v-btn>
+      <div v-if="connecte">
+        <v-btn color="primary" elevation="2" large outlined class="btn-panier"><v-icon>mdi-cart</v-icon>Panier</v-btn>
+        <v-btn color="#dc3545" elevation="2" large outlined @click="deconnexion"><v-icon>mdi-logout</v-icon>Deconnexion</v-btn>
+      </div>
+      <div v-else>
+        <v-btn color="#28a745" elevation="2" large outlined><v-icon>mdi-login</v-icon>Connexion</v-btn>
+      </div>
     </v-app-bar>
 
     <!-- Responsive menu -->
     <v-navigation-drawer v-model="drawer" temporary width="350px" fixed>
       <v-list nav>
         <v-list-item-group v-model="group">
-          <v-list-item v-if="roleUser === 'ROLE_ADMIN'">
+          <v-list-item v-if="login === 'admin'">
             <v-list-item-icon><v-icon>mdi-shield-account</v-icon></v-list-item-icon>
             <v-list-item-title>
               <a href="/admin">Administration</a>
             </v-list-item-title>
           </v-list-item>
-          <v-banner single-line v-if="roleUser === 'ROLE_ADMIN'"></v-banner>
+          <v-banner single-line v-if="login === 'admin'"></v-banner>
           <router-link to="/commandes">
-          <v-list-item>
+          <v-list-item v-if="login">
             <v-list-item-icon><v-icon>mdi-storefront</v-icon></v-list-item-icon>
             <v-list-item-title>Historique de vos commandes</v-list-item-title>
           </v-list-item>
@@ -61,7 +65,7 @@
 
     <!-- Main page -->
     <v-main>
-      <v-banner single-line></v-banner>
+      <v-banner single-line v-if="login"></v-banner>
       <!-- router page -->
       <router-view/>
     </v-main>
@@ -83,12 +87,22 @@ export default {
     drawer: false,
     group: null,
     title: "Recette Cuisine Maison",
-    auth: true,
-    roleUser: "ROLE_ADMIN"
   }),
   computed: {
-    panierAccess() {
-      return !!(this.auth && this.roleUser);
+    connecte()  {
+      return this.$store.state.connecte
+    },
+    login() {
+      return this.$store.state.login
+    }
+  },
+  methods: {
+    deconnexion() {
+      sessionStorage.removeItem('token')
+      sessionStorage.removeItem('store')
+      this.$store.state.connecte=false
+      this.$store.state.login=""
+      this.$router.push('/login')
     }
   }
 };
