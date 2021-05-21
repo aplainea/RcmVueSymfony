@@ -33,7 +33,8 @@
       </v-card-text>
       <v-card-actions>
         <v-col>
-          <v-btn color="green" text>Prendre la vidéo recette</v-btn>
+          <v-btn v-if="!panier" color="green" text @click="addRecipe(recipe)">Prendre la vidéo recette</v-btn>
+          <v-btn v-if="panier" color="grey" text disabled>Vous avez déjà une recette dans votre panier</v-btn>
           <!--<v-btn color="grey" text>Vous possédez déjà cette vidéo recette (Historique de vos commandes)</v-btn>-->
         </v-col>
         <v-col class="d-flex justify-end">
@@ -54,7 +55,6 @@
 
 <script>
 import Axios from '../api/axios'
-Axios()
 
 export default {
   name: 'Recipe',
@@ -65,6 +65,7 @@ export default {
     return {
       recipe: null,
       id: this.$route.params.id,
+      panier: this.$store.state.panier
     }
   },
   created () {
@@ -77,6 +78,11 @@ export default {
     }
   },
   methods: {
+    addRecipe(recipe) {
+      sessionStorage.setItem('panier', JSON.stringify(recipe))
+      this.$store.state.panier = true
+      this.$router.push('/panier')
+    },
     imageUrl(p) {
       return require('../../public/uploads/images/recipes/'+p)
     },

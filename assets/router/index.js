@@ -5,6 +5,7 @@ import Recipe from "../components/Recipe";
 import AllRecipes from "../components/AllRecipes";
 import CommandsHistory from "../components/CommandsHistory";
 import Login from "../components/Login";
+import Panier from "../components/Panier";
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const index = new VueRouter({
       path: '/commandes',
       name: 'CommandsHistory',
       component: CommandsHistory
+    },
+    {
+      path: '/panier',
+      name: 'Panier',
+      component: Panier
     },
     {
       path: '*', // chemin par défaut

@@ -10,11 +10,15 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="connecte">
-        <v-btn color="primary" elevation="2" large outlined class="btn-panier"><v-icon>mdi-cart</v-icon>Panier</v-btn>
+        <router-link to="/panier">
+          <v-btn color="primary" elevation="2" large outlined class="btn-panier"><v-icon>mdi-cart</v-icon>Panier</v-btn>
+        </router-link>
         <v-btn color="#dc3545" elevation="2" large outlined @click="deconnexion"><v-icon>mdi-logout</v-icon>Deconnexion</v-btn>
       </div>
       <div v-else>
-        <v-btn color="#28a745" elevation="2" large outlined><v-icon>mdi-login</v-icon>Connexion</v-btn>
+        <router-link to="/login">
+          <v-btn color="#28a745" elevation="2" large outlined><v-icon>mdi-login</v-icon>Connexion</v-btn>
+        </router-link>
       </div>
     </v-app-bar>
 

@@ -16,6 +16,7 @@ export default new Vuex.Store({
   state: {
     connecte: false,
     login: '',
+    panier: false
   },
   plugins: [
     MAJ
